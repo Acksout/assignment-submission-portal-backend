@@ -17,5 +17,10 @@ router.post(
   [auth, validateSubmission],
   assignmentController.submitWork
 );
+router.get(
+  "/student/:studentIdentifier",
+  adminAuth,
+  assignmentController.getStudentSubmissions
+);
 
 export default router;
