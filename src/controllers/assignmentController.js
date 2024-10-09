@@ -1,4 +1,5 @@
 import { Assignment } from "../models/Assignment.js";
+import { Submission } from "../models/Submission.js";
 
 export const assignmentController = {
   create: async (req, res, next) => {
@@ -47,6 +48,33 @@ export const assignmentController = {
         message: "Update failed",
         error: error.message,
       });
+    }
+  },
+
+  submitWork: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { submitData } = req.body;
+      const userId = req.user._id;
+
+      const assignment = await Assignment.findById(id);
+      if (!assignment) {
+        throw new Error("Assignment not found");
+      }
+
+      const submission = new Submission({
+        assignmentId: id,
+        userId,
+        submitData,
+      });
+
+      await submission.save();
+
+      res
+        .status(201)
+        .json({ message: "Work submitted successfully", submission });
+    } catch (error) {
+      next(error);
     }
   },
 };

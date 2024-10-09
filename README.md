@@ -74,3 +74,12 @@ d. Reject an assignment (requires admin authentication):
 curl -X POST http://localhost:3000/api/assignments/ASSIGNMENT_ID/reject \
   -H "Authorization: Bearer YOUR_ADMIN_JWT_TOKEN"
 ```
+
+e. Submit work for an assignment (requires authentication):
+
+```
+curl -X POST http://localhost:3000/api/assignments/ASSIGNMENT_ID/upload \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"submitData": "This is my completed assignment"}'
+```

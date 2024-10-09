@@ -28,3 +28,7 @@ export const validateAssignment = [
     next();
   },
 ];
+
+export const validateSubmission = [
+  body("submitData").notEmpty().withMessage("Submit data is required"),
+];
