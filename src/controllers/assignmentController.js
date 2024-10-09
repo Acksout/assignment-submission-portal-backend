@@ -4,6 +4,7 @@ import { Submission } from "../models/Submission.js";
 import { User } from "../models/User.js";
 
 export const assignmentController = {
+  // Create a new assignment
   create: async (req, res, next) => {
     try {
       const assignment = new Assignment({
@@ -17,6 +18,7 @@ export const assignmentController = {
     }
   },
 
+  // Get all assignments for the current admin
   getAll: async (req, res, next) => {
     try {
       const assignments = await Assignment.find({
@@ -28,6 +30,7 @@ export const assignmentController = {
     }
   },
 
+  // Update the status of an assignment (accept or reject)
   updateStatus: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -53,6 +56,7 @@ export const assignmentController = {
     }
   },
 
+  // Submit work for an assignment
   submitWork: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -80,6 +84,7 @@ export const assignmentController = {
     }
   },
 
+  // Get submissions for a specific student
   getStudentSubmissions: async (req, res, next) => {
     try {
       const { studentIdentifier } = req.params;
@@ -97,6 +102,7 @@ export const assignmentController = {
         return res.status(404).json({ message: "Student not found" });
       }
 
+      // Fetch and format submissions for the student
       const submissions = await Submission.find({ userId: student._id })
         .populate("assignmentId")
         .sort({ submittedAt: -1 });

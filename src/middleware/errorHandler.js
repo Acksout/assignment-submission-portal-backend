@@ -1,6 +1,8 @@
 export const errorHandler = (err, req, res, next) => {
+  // Log the error for debugging purposes
   console.error(err);
 
+  // Handle Mongoose validation errors
   if (err.name === "ValidationError") {
     return res.status(400).json({
       status: "error",
@@ -9,6 +11,7 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
 
+  // Handle duplicate key errors (e.g., unique constraint violations)
   if (err.code === 11000) {
     return res.status(400).json({
       status: "error",
@@ -17,6 +20,7 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
 
+  // Handle all other errors
   res.status(err.status || 500).json({
     status: "error",
     message: err.message || "Internal server error",
